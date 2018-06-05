@@ -1,4 +1,4 @@
-package com.dozek.cursomc.domain;
+package com.dozek.cursomc.domain.enums;
 
 public enum TipoCliente {
 	
