@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dozek.cursomc.domain.Cidade;
 import com.dozek.cursomc.domain.Cliente;
@@ -15,7 +16,6 @@ import com.dozek.cursomc.domain.Endereco;
 import com.dozek.cursomc.domain.dto.ClienteDTO;
 import com.dozek.cursomc.domain.dto.ClienteNewDTO;
 import com.dozek.cursomc.domain.enums.TipoCliente;
-import com.dozek.cursomc.repositories.CidadeRepository;
 import com.dozek.cursomc.repositories.ClienteRepository;
 import com.dozek.cursomc.repositories.EnderecoRepository;
 import com.dozek.cursomc.services.execeptions.DataIntegrityException;
@@ -30,8 +30,6 @@ public class ClienteService {
 	@Autowired
 	private EnderecoRepository enderecoRepository;
 	
-	@Autowired
-	private CidadeRepository cidadeRepository;
 	
 	public Cliente find(Integer id) {
 		
@@ -43,6 +41,7 @@ public class ClienteService {
 		return obj;
 		
 	}
+	@Transactional
 	public Cliente insert(Cliente obj) {
 		obj.setId(null);
 		 repo.save(obj);
@@ -63,7 +62,7 @@ public class ClienteService {
 			repo.delete(id);
 			}
 			catch(DataIntegrityViolationException e) {
-				throw new DataIntegrityException("Não é possível excluir porque há entidades relacionadas");
+				throw new DataIntegrityException("Não é possível excluir porque há pedidos relacionadas");
 			}
 	}
 	
@@ -83,7 +82,7 @@ public class ClienteService {
 	
 	public Cliente fromDTO(ClienteNewDTO objDto) {
 		Cliente cli = new Cliente(null, objDto.getNome(), objDto.getEmail(),objDto.getCpfOuCnpj(), TipoCliente.toEnum(objDto.getTipo()));
-		Cidade cit = cidadeRepository.findOne(objDto.getCidadeId());
+		Cidade cit = new Cidade (objDto.getCidadeId(),null,null);
 		Endereco end = new Endereco(null, objDto.getLogradouro(), objDto.getNumero(), objDto.getComplemento(), objDto.getBairro(), objDto.getCep(), cli, cit);
 		cli.getEndereco().add(end);
 		cli.getTelefone().add(objDto.getTelefone1());
