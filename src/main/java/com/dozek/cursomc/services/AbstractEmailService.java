@@ -21,6 +21,7 @@ public abstract class AbstractEmailService implements EmailService {
 	private String sender;
 	@Autowired
 	private TemplateEngine templateEngine;
+	
 	@Autowired
 	private JavaMailSender javaMailSender;
 
