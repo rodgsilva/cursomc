@@ -16,9 +16,12 @@ import com.dozek.cursomc.domain.Cliente;
 import com.dozek.cursomc.domain.Endereco;
 import com.dozek.cursomc.domain.dto.ClienteDTO;
 import com.dozek.cursomc.domain.dto.ClienteNewDTO;
+import com.dozek.cursomc.domain.enums.Perfil;
 import com.dozek.cursomc.domain.enums.TipoCliente;
 import com.dozek.cursomc.repositories.ClienteRepository;
 import com.dozek.cursomc.repositories.EnderecoRepository;
+import com.dozek.cursomc.security.UserSS;
+import com.dozek.cursomc.services.execeptions.AuthorizationException;
 import com.dozek.cursomc.services.execeptions.DataIntegrityException;
 import com.dozek.cursomc.services.execeptions.ObjectNotFoundException;
 
@@ -36,6 +39,12 @@ public class ClienteService {
 	
 	
 	public Cliente find(Integer id) {
+		
+		UserSS user = UserService.authenticated();
+		
+		if(user==null ||!user.hasRole(Perfil.ADMIN)&& !id.equals(user.getId())) {
+			throw new AuthorizationException("Acesso Negado");
+		}
 		
 		Cliente obj=repo.findOne(id);
 		if(obj == null) {
