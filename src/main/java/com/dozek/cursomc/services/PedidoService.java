@@ -3,9 +3,13 @@ package com.dozek.cursomc.services;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.dozek.cursomc.domain.Cliente;
 import com.dozek.cursomc.domain.ItemPedido;
 import com.dozek.cursomc.domain.PagamentoComBoleto;
 import com.dozek.cursomc.domain.Pedido;
@@ -15,6 +19,8 @@ import com.dozek.cursomc.repositories.ItemPedidoRepository;
 import com.dozek.cursomc.repositories.PagamentoRepository;
 import com.dozek.cursomc.repositories.PedidoRepository;
 import com.dozek.cursomc.repositories.ProdutoRepository;
+import com.dozek.cursomc.security.UserSS;
+import com.dozek.cursomc.services.execeptions.AuthorizationException;
 import com.dozek.cursomc.services.execeptions.ObjectNotFoundException;
 
 @Service
@@ -70,4 +76,14 @@ public class PedidoService {
 		return obj;
 	}
 
+	public Page<Pedido> findPage(Integer page,Integer linesPerPage, String ordeBy,String direction){
+		
+		UserSS user =UserService.authenticated();
+		if (user== null) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		PageRequest pageRequest = new PageRequest(page, linesPerPage,Direction.valueOf(direction),ordeBy);
+		Cliente cliente = clienteRepository.findOne(user.getId());
+		return repo.findByCliente(cliente, pageRequest);		
+	}
 }
