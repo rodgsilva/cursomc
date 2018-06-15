@@ -13,6 +13,7 @@ import com.dozek.servicephoto.domain.Cidade;
 import com.dozek.servicephoto.domain.Cliente;
 import com.dozek.servicephoto.domain.Endereco;
 import com.dozek.servicephoto.domain.Estado;
+import com.dozek.servicephoto.domain.Fornecedor;
 import com.dozek.servicephoto.domain.ItemPedido;
 import com.dozek.servicephoto.domain.Pagamento;
 import com.dozek.servicephoto.domain.PagamentoComBoleto;
@@ -27,6 +28,7 @@ import com.dozek.servicephoto.repositories.CidadeRepository;
 import com.dozek.servicephoto.repositories.ClienteRepository;
 import com.dozek.servicephoto.repositories.EnderecoRepository;
 import com.dozek.servicephoto.repositories.EstadoRepository;
+import com.dozek.servicephoto.repositories.FornecedorRepository;
 import com.dozek.servicephoto.repositories.ItemPedidoRepository;
 import com.dozek.servicephoto.repositories.PagamentoRepository;
 import com.dozek.servicephoto.repositories.PedidoRepository;
@@ -58,6 +60,9 @@ public class DBService {
 	private PagamentoRepository pagamentoRepository;
 	@Autowired
 	private ItemPedidoRepository itempedidoRepository;
+	
+    @Autowired
+	private FornecedorRepository fornecedorRepository;
 
 	@Autowired
 	private ProdutoRepository prodRepo;
@@ -73,7 +78,7 @@ public class DBService {
 		Categoria cat6 = new Categoria(null, "Decoração");
 		Categoria cat7 = new Categoria(null, "Perfumaria");
 
-		Produto p1 = new Produto(null, "Compudator", 2000.00);
+		Produto p1 = new Produto(null, "Compudator", 2500.00);
 		Produto p2 = new Produto(null, "Impressora", 800.00);
 		Produto p3 = new Produto(null, "mouse", 80.00);
 		Produto p4 = new Produto(null, "Mesa de escritório", 300.00);
@@ -208,26 +213,50 @@ public class DBService {
 
 		estadoRepository.save(Arrays.asList(est1, est2));
 		cidadeRepository.save(Arrays.asList(c1, c2, c3));
-
+		
+		Fornecedor for1= new Fornecedor(null, "RodrigoME", "rod_feroz@hotmail.com", "05839134000114",
+				TipoCliente.PESSOAJURIDICA, pe.encode("123"));
+	//	for1.getTelefone().addAll(Arrays.asList("27363323", "93838393"));
+		for1.addPerfil(Perfil.FOR);
+		Fornecedor for2= new Fornecedor(null, "Joãome", "rod.gomes.silva@gmail.com", "56475004000180",
+				TipoCliente.PESSOAJURIDICA, pe.encode("123"));
+	//	for2.getTelefone().addAll(Arrays.asList("27363323", "93838393"));
+		for2.addPerfil(Perfil.FOR);
+		
+		Fornecedor for3= new Fornecedor(null, "Maria da Silva", "cris.tonetti@gmail.com", "11645805000109",
+				TipoCliente.PESSOAJURIDICA, pe.encode("123"));
+		/*for3.getTelefone().addAll(Arrays.asList("27363323", "93838393"));*/
+		for3.addPerfil(Perfil.FOR);
+	//	 fornecedorRepository.save(Arrays.asList(for1,for2,for3));
+		 
 		Cliente cli1 = new Cliente(null, "Maria da Silva", "rod_feroz@hotmail.com", "36378913377",
 				TipoCliente.PESSOAFISICA, pe.encode("123"));
-		cli1.getTelefone().addAll(Arrays.asList("27363323", "93838393"));
+		cli1.getTelefone().addAll(Arrays.asList("27363328", "93837393"));
 
 		Cliente cli2 = new Cliente(null, "Ana Costa", "rod.gomes.silva@gmail.com", "31628882740",
 				TipoCliente.PESSOAFISICA, pe.encode("123"));
 		cli2.getTelefone().addAll(Arrays.asList("27363323", "93838393"));
 		cli2.addPerfil(Perfil.ADMIN);
+		
+		Endereco e5 = new Endereco(null, "Avenida Matos", "195", "Sala 800", "Centro", "38777012", null,for2,c2);
 
-		Endereco e1 = new Endereco(null, "Rua Flores", "300", "Apto 303", "Jardim", "38220634", cli1, c1);
-		Endereco e2 = new Endereco(null, "Avenida Matos", "195", "Sala 800", "Centro", "38777012", cli1, c2);
+		Endereco e6 = new Endereco(null, "Avenida Floriano", "2106", null, "Centro", "281777012", null,for3,c2);
+		
+		Endereco e4 = new Endereco(null, "Rua Flores", "300", "Apto 303", "Jardim", "38220634", null,for1,c1);
 
-		Endereco e3 = new Endereco(null, "Avenida Floriano", "2106", null, "Centro", "281777012", cli2, c2);
+		Endereco e1 = new Endereco(null, "Rua Flores", "300", "Apto 303", "Jardim", "38220634", cli1,null,c1);
+		Endereco e2 = new Endereco(null, "Avenida Matos", "195", "Sala 800", "Centro", "38777012", cli1,null,c2);
 
+		Endereco e3 = new Endereco(null, "Avenida Floriano", "2106", null, "Centro", "281777012", cli2,null,c2);
+  
+		//Endereco e4 = new Endereco(id, logradouro, numero, complemento, bairro, cep, cliente, fornecedor, cidade)
 		cli1.getEndereco().addAll(Arrays.asList(e1, e2));
 		cli2.getEndereco().addAll(Arrays.asList(e3));
-
+		for1.getEndereco().addAll(Arrays.asList(e4));
+		
+		fornecedorRepository.save(Arrays.asList(for1,for2,for3));
 		clienteRepository.save(Arrays.asList(cli1, cli2));
-		enderecoRepository.save(Arrays.asList(e1, e2, e3));
+		enderecoRepository.save(Arrays.asList(e1, e2, e3,e4,e5,e6));
 
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 

@@ -30,6 +30,13 @@ public class Endereco implements Serializable{
 	@JoinColumn(name="cliente_id")
 	private Cliente cliente;
 	
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name="fornecedor_id")
+	private Fornecedor fornecedor;
+	
+
+
 	@ManyToOne
 	@JoinColumn(name="cidade_id")
 	private Cidade cidades;
@@ -38,7 +45,7 @@ public class Endereco implements Serializable{
 	}
 
 	public Endereco(Integer id, String logradouro, String numero, String complemento, String bairro, String cep,
-			Cliente cliente,Cidade cidade) {
+			Cliente cliente,Fornecedor fornecedor ,Cidade cidade) {
 		super();
 		this.id = id;
 		this.logradouro = logradouro;
@@ -46,7 +53,8 @@ public class Endereco implements Serializable{
 		this.complemento = complemento;
 		this.bairro = bairro;
 		this.cep = cep;
-		this.cliente = cliente;
+		this.cliente = cliente; 
+		this.fornecedor= (fornecedor==null) ? null : fornecedor;
 		this.setCidade(cidade);
 	}
 
@@ -112,6 +120,14 @@ public class Endereco implements Serializable{
 
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
+	}
+	
+	public Fornecedor getFornecedor() {
+		return fornecedor;
+	}
+
+	public void setFornecedor(Fornecedor fornecedor) {
+		this.fornecedor = fornecedor;
 	}
 
 	@Override
