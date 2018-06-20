@@ -13,12 +13,16 @@ import com.dozek.servicephoto.domain.Cidade;
 import com.dozek.servicephoto.domain.Cliente;
 import com.dozek.servicephoto.domain.Endereco;
 import com.dozek.servicephoto.domain.Estado;
+import com.dozek.servicephoto.domain.FinanceiroPagar;
+import com.dozek.servicephoto.domain.FinanceiroPagarParcela;
 import com.dozek.servicephoto.domain.Fornecedor;
 import com.dozek.servicephoto.domain.ItemPedido;
+import com.dozek.servicephoto.domain.ItemPedidoCompra;
 import com.dozek.servicephoto.domain.Pagamento;
 import com.dozek.servicephoto.domain.PagamentoComBoleto;
 import com.dozek.servicephoto.domain.PagamentoComCartao;
 import com.dozek.servicephoto.domain.Pedido;
+import com.dozek.servicephoto.domain.PedidoCompra;
 import com.dozek.servicephoto.domain.Produto;
 import com.dozek.servicephoto.domain.enums.EstadoPagamento;
 import com.dozek.servicephoto.domain.enums.Perfil;
@@ -28,9 +32,12 @@ import com.dozek.servicephoto.repositories.CidadeRepository;
 import com.dozek.servicephoto.repositories.ClienteRepository;
 import com.dozek.servicephoto.repositories.EnderecoRepository;
 import com.dozek.servicephoto.repositories.EstadoRepository;
+import com.dozek.servicephoto.repositories.FinanceiroPagarRepository;
 import com.dozek.servicephoto.repositories.FornecedorRepository;
+import com.dozek.servicephoto.repositories.ItemPedidoCompraRepository;
 import com.dozek.servicephoto.repositories.ItemPedidoRepository;
 import com.dozek.servicephoto.repositories.PagamentoRepository;
+import com.dozek.servicephoto.repositories.PedidoCompraRepository;
 import com.dozek.servicephoto.repositories.PedidoRepository;
 import com.dozek.servicephoto.repositories.ProdutoRepository;
 
@@ -57,10 +64,15 @@ public class DBService {
 	@Autowired
 	private PedidoRepository pedidoRepository;
 	@Autowired
+	private PedidoCompraRepository pedidoCompraRepository;
+	@Autowired
 	private PagamentoRepository pagamentoRepository;
 	@Autowired
 	private ItemPedidoRepository itempedidoRepository;
-	
+	@Autowired
+	private ItemPedidoCompraRepository itempedidoCompraRepository;
+	@Autowired
+	private FinanceiroPagarRepository finenceiroRepository;
     @Autowired
 	private FornecedorRepository fornecedorRepository;
 
@@ -214,16 +226,16 @@ public class DBService {
 		estadoRepository.save(Arrays.asList(est1, est2));
 		cidadeRepository.save(Arrays.asList(c1, c2, c3));
 		
-		Fornecedor for1= new Fornecedor(null, "RodrigoME", "rod_feroz@hotmail.com", "05839134000114",
+		Fornecedor for1= new Fornecedor(null, "CrisME", "Cris.tonetti@gmail.com", "13101503000103",
 				TipoCliente.PESSOAJURIDICA, pe.encode("123"));
 	//	for1.getTelefone().addAll(Arrays.asList("27363323", "93838393"));
 		for1.addPerfil(Perfil.FOR);
-		Fornecedor for2= new Fornecedor(null, "Joãome", "rod.gomes.silva@gmail.com", "56475004000180",
+		Fornecedor for2= new Fornecedor(null, "PedroJrME", "rod_feroz@Hotmail.com", "15151241000109",
 				TipoCliente.PESSOAJURIDICA, pe.encode("123"));
 	//	for2.getTelefone().addAll(Arrays.asList("27363323", "93838393"));
 		for2.addPerfil(Perfil.FOR);
 		
-		Fornecedor for3= new Fornecedor(null, "Maria da Silva", "cris.tonetti@gmail.com", "11645805000109",
+		Fornecedor for3= new Fornecedor(null, "Maria da Silva Gomes", "gomes@gmail.com", "57955364000142",
 				TipoCliente.PESSOAJURIDICA, pe.encode("123"));
 		/*for3.getTelefone().addAll(Arrays.asList("27363323", "93838393"));*/
 		for3.addPerfil(Perfil.FOR);
@@ -262,7 +274,31 @@ public class DBService {
 
 		Pedido ped1 = new Pedido(null, sdf.parse("30/09/2017  10:32"), cli1, e1);
 		Pedido ped2 = new Pedido(null, sdf.parse("10/10/2017  19:35"), cli1, e2);
+		
+		PedidoCompra pedComp1 = new PedidoCompra(null, sdf.parse("30/09/2018  10:32"), for1, e4);
+		PedidoCompra pedComp2 = new PedidoCompra(null, sdf.parse("10/10/2018  19:35"), for2, e5);
 
+		FinanceiroPagar fincpt1 = new FinanceiroPagar(null, EstadoPagamento.QUITADO, pedComp1, 600.00);
+		pedComp1.setFinanceiroPagar(fincpt1);
+		FinanceiroPagarParcela fincptparc = new FinanceiroPagarParcela(null,"2257/1", sdf.parse("30/09/2018  10:32"), null, 100.00, fincpt1);
+		                    //    new FinanceiroPagarComBoleto(id, estadoPagamento, pedidoCompra, numeroDocumento, dataVencimento, dataPagamento, valorParcela)
+		fincpt1.getFinanceiroPagarParcela().add(fincptparc);
+		
+		FinanceiroPagar fincpt2 = new FinanceiroPagar(null, EstadoPagamento.PENDENTE, pedComp2,200.00);
+			//	( null, EstadoPagamento.PENDENTE, pedComp2,"1/3", sdf.parse("20/10/2017 00:00"),null,200.00);
+		pedComp2.setFinanceiroPagar(fincpt2);
+		
+		FinanceiroPagarParcela fincptparc1 = new FinanceiroPagarParcela(null,"2258/1", sdf.parse("30/09/2018  10:32"), null, 100.00, fincpt2);
+				//( null, EstadoPagamento.PENDENTE, pedComp2,200.00);
+	//	pedComp2.setFinanceiroPagar(fincpt2);
+		
+		FinanceiroPagarParcela fincptparc2 = new FinanceiroPagarParcela(null,"2258/2", sdf.parse("30/10/2018  10:32"), null, 100.00, fincpt2);
+		fincpt2.getFinanceiroPagarParcela().addAll(Arrays.asList(fincptparc1,fincptparc2));
+		
+		//pedComp2.setFinanceiroPagar(fincpt2);
+		
+		
+		
 		Pagamento pagto1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, ped1, 6);
 		ped1.setPagamento(pagto1);
 
@@ -271,22 +307,42 @@ public class DBService {
 		ped2.setPagamento(pagto2);
 
 		cli1.getPedidos().addAll(Arrays.asList(ped1, ped2));
+		
+		for1.getPedidoCompras().addAll(Arrays.asList(pedComp1));
+		for2.getPedidoCompras().addAll(Arrays.asList(pedComp2));
 
 		pedidoRepository.save(Arrays.asList(ped1, ped2));
 		pagamentoRepository.save(Arrays.asList(pagto1, pagto2));
+		
+		pedidoCompraRepository.save(Arrays.asList(pedComp1, pedComp2));
+		finenceiroRepository.save(Arrays.asList(fincpt1, fincpt2));
+		
 
 		ItemPedido ip1 = new ItemPedido(ped1, p1, 00.00, 1, 2000.00);
 		ItemPedido ip2 = new ItemPedido(ped1, p3, 00.00, 2, 80.00);
 		ItemPedido ip3 = new ItemPedido(ped2, p2, 100.00, 1, 800.00);
+		
+		ItemPedidoCompra ipc1 = new ItemPedidoCompra(pedComp1, p6, 00.00, 1, 2000.00);
+		ItemPedidoCompra ipc2 = new ItemPedidoCompra(pedComp1, p7, 00.00, 2, 80.00);
+		ItemPedidoCompra ipc3 = new ItemPedidoCompra(pedComp2, p8, 100.00, 1, 800.00);
 
 		ped1.getItens().addAll(Arrays.asList(ip1, ip2));
 		ped2.getItens().addAll(Arrays.asList(ip3));
+		
+		pedComp1.getItens().addAll(Arrays.asList(ipc1, ipc2));
+		pedComp2.getItens().addAll(Arrays.asList(ipc3));
 
 		p1.getItens().addAll(Arrays.asList(ip1));
 		p2.getItens().addAll(Arrays.asList(ip3));
 		p3.getItens().addAll(Arrays.asList(ip2));
+		
+		p6.getItensComp().addAll(Arrays.asList(ipc1));
+		p8.getItensComp().addAll(Arrays.asList(ipc3));
+		p7.getItensComp().addAll(Arrays.asList(ipc2));
 
 		itempedidoRepository.save(Arrays.asList(ip1, ip2, ip3));
+		
+		itempedidoCompraRepository.save(Arrays.asList(ipc1, ipc2, ipc3));
 
 	}
 

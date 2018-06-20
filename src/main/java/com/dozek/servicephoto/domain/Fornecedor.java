@@ -53,10 +53,12 @@ public class Fornecedor implements Serializable{
 	
 	@JsonIgnore
 	@OneToMany(mappedBy="fornecedor")
-	private List<PedidoCompra> pedidoCompras= new ArrayList<>();
+	private List<PedidoCompra> pedidoCompras = new ArrayList<>();
 	
 		
 	public Fornecedor() {
+		
+		addPerfil(Perfil.FOR);
 		
 	}
 
@@ -69,6 +71,7 @@ public class Fornecedor implements Serializable{
 		this.cpfOuCnpj = cpfOuCnpj;
 		this.tipo =(tipo==null) ? null : tipo.getCod();
 		this.senha =senha;
+		addPerfil(Perfil.FOR);
 		
 	}
 
@@ -152,12 +155,12 @@ public class Fornecedor implements Serializable{
 	public void setTelefone(Set<String> telefone) {
 		this.telefones = telefone;
 	}*/
-	public List<PedidoCompra> getPedidos() {
+	public List<PedidoCompra> getPedidoCompras() {
 		return pedidoCompras;
 	}
 
 
-	public void setPedidos(List<PedidoCompra> pedidoCompras) {
+	public void setPedidoCompras(List<PedidoCompra> pedidoCompras) {
 		this.pedidoCompras = pedidoCompras;
 	}
 	

@@ -151,7 +151,7 @@ public class PedidoCompra implements Serializable{
 		builder.append(", Fornecedor: ");
 		builder.append(getFornecedor().getNome());
 		builder.append(", Situação do financeiroPagar: ");
-		builder.append(getFinanceiroPagar().getEstadoPagamento().getDescricao());
+		builder.append( getFinanceiroPagar().getEstadoPagamento().getDescricao());
 		builder.append("\nDetalhes:\n");
 		for(ItemPedidoCompra ip : getItens()) {
 		builder.append(ip.toString());
