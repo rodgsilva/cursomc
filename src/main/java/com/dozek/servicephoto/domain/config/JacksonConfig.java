@@ -18,6 +18,8 @@ public class JacksonConfig {
 			public void configure(ObjectMapper objectMapper) {
 				objectMapper.registerSubtypes(PagamentoComCartao.class);
 				objectMapper.registerSubtypes(PagamentoComBoleto.class);
+			//	objectMapper.registerSubtypes(FinanceiroPagarComCartao.class);
+			//	objectMapper.registerSubtypes(FinanceiroPagarComBoleto.class);
 				super.configure(objectMapper);
 			}
 		};

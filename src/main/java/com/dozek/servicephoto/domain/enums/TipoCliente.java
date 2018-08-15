@@ -5,6 +5,7 @@ public enum TipoCliente {
 	PESSOAFISICA(1,"Pessoa Física"),
 	PESSOAJURIDICA(2,"Pessoa Juridica");
 	
+	
 	private int cod;
 	private String descricao;
 	

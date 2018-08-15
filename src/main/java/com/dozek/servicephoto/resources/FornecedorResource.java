@@ -19,37 +19,37 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.dozek.servicephoto.domain.Cliente;
-import com.dozek.servicephoto.domain.dto.ClienteDTO;
-import com.dozek.servicephoto.domain.dto.ClienteNewDTO;
-import com.dozek.servicephoto.services.ClienteService;
+import com.dozek.servicephoto.domain.Fornecedor;
+import com.dozek.servicephoto.domain.dto.FornecedorDTO;
+import com.dozek.servicephoto.domain.dto.FornecedorNewDTO;
+import com.dozek.servicephoto.services.FornecedorService;
 
 @RestController
-@RequestMapping(value="/clientes")
-public class ClienteResource {
+@RequestMapping(value="/fornecedor")
+public class FornecedorResource {
 	
 	@Autowired
-	private ClienteService service; 
+	private FornecedorService service; 
 	
 	@RequestMapping(value="/{id}",method=RequestMethod.GET)
-	public ResponseEntity<Cliente> find(@PathVariable Integer id) {
+	public ResponseEntity<Fornecedor> find(@PathVariable Integer id) {
 		
-	Cliente obj = service.find(id);
+		Fornecedor obj = service.find(id);
 		
 		return ResponseEntity.ok().body(obj);		
 	}
 	
 	@RequestMapping(value="/email",method=RequestMethod.GET)
-	public ResponseEntity<Cliente> find(@RequestParam(value="value")String email) {
-	Cliente obj = service.findByEmail(email);
+	public ResponseEntity<Fornecedor> find(@RequestParam(value="value")String email) {
+		Fornecedor obj = service.findByEmail(email);
 	return ResponseEntity.ok().body(obj);		
 	}
 	
 	
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDTO objDto){
-		Cliente obj = service.fromDTO(objDto);
+	public ResponseEntity<Void> insert(@Valid @RequestBody FornecedorNewDTO objDto){
+		Fornecedor obj = service.fromDTO(objDto);
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}").buildAndExpand(obj.getId()).toUri();
@@ -57,8 +57,8 @@ public class ClienteResource {
 	}
 	
 	@RequestMapping(value="/{id}",method=RequestMethod.PUT)
-	public ResponseEntity<Void> update(@Valid @RequestBody ClienteDTO objDto,@PathVariable Integer id){
-		Cliente obj = service.fromDTO(objDto);
+	public ResponseEntity<Void> update(@Valid @RequestBody FornecedorDTO objDto,@PathVariable Integer id){
+		Fornecedor obj = service.fromDTO(objDto);
 		obj.setId(id);
 		obj = service.update(obj);
 		return ResponseEntity.noContent().build();
@@ -72,25 +72,25 @@ public class ClienteResource {
 	}
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(method=RequestMethod.GET)
-	public ResponseEntity<List<ClienteDTO>> findAll() {
+	public ResponseEntity<List<FornecedorDTO>> findAll() {
 		
-	List<Cliente> list = service.findAll();
-	List<ClienteDTO> listDTO =list.stream().map(obj -> new ClienteDTO(obj)).collect(Collectors.toList());
+	List<Fornecedor> list = service.findAll();
+	List<FornecedorDTO> listDTO =list.stream().map(obj -> new FornecedorDTO(obj)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDTO);
 		
 	}
 	
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(value="/page",method=RequestMethod.GET)
-	public ResponseEntity<Page<ClienteDTO>> findPage(
+	public ResponseEntity<Page<FornecedorDTO>> findPage(
 		    @RequestParam(value="page",defaultValue="0")Integer page,
 		    @RequestParam(value="linesPerPage",defaultValue="24")Integer linesPerPage,
 		    @RequestParam(value="ordeBy",defaultValue="nome")String ordeBy,
 		    @RequestParam(value="direction",defaultValue="ASC")String direction
 			) {
 		
-	Page<Cliente> list = service.findPage(page, linesPerPage, ordeBy, direction);
-	Page<ClienteDTO> listDTO =list.map(obj -> new ClienteDTO(obj));
+	Page<Fornecedor> list = service.findPage(page, linesPerPage, ordeBy, direction);
+	Page<FornecedorDTO> listDTO =list.map(obj -> new FornecedorDTO(obj));
 		return ResponseEntity.ok().body(listDTO);
 		
 	}

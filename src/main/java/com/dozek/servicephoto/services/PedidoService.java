@@ -2,6 +2,8 @@ package com.dozek.servicephoto.services;
 
 import java.util.Date;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,6 +27,8 @@ import com.dozek.servicephoto.services.execeptions.ObjectNotFoundException;
 
 @Service
 public class PedidoService {
+	
+	private static final Logger LOG = LoggerFactory.getLogger(PedidoService.class);
 	
 	@Autowired
 	private PedidoRepository repo;
