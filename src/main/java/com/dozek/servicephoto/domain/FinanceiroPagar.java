@@ -4,27 +4,20 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 import com.dozek.servicephoto.domain.enums.EstadoPagamento;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-//@Inheritance(strategy=InheritanceType.JOINED)
-//@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type") 
+
 @Entity
 public class FinanceiroPagar implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Integer finac_id;
+	@Column(name="finac_id")
+	private Integer finacid;
 	
 	private Integer estadoPagamento;
 	
@@ -34,16 +27,20 @@ public class FinanceiroPagar implements Serializable{
 	private PedidoCompra pedidoCompra;
 	
 	private double ValorTotal;
-	
+	                
 	@OneToMany(mappedBy="financeiroPagar", cascade=CascadeType.ALL)
 	private List<FinanceiroPagarParcela> financeiroPagarParcela= new ArrayList<>();
+	
+	@ManyToOne
+	@JoinColumn(name="centroRateio_id")
+	private CentroRateio centroRateio;
 	
 	public FinanceiroPagar() {
 	}
 	
-	public FinanceiroPagar(Integer finac_id, EstadoPagamento estadoPagamento, PedidoCompra pedidoCompra, double valorTotal) {
+	public FinanceiroPagar(Integer finacid, EstadoPagamento estadoPagamento, PedidoCompra pedidoCompra, double valorTotal) {
 	super();
-	this.finac_id = finac_id;
+	this.finacid = finacid;
 	this.estadoPagamento =(estadoPagamento==null) ? null : estadoPagamento.getCod();
 	this.pedidoCompra = pedidoCompra;
 	this.ValorTotal = valorTotal;
@@ -63,11 +60,11 @@ public class FinanceiroPagar implements Serializable{
 
 
 	public Integer getId() {
-		return finac_id;
+		return finacid;
 	}
 
 	public void setId(Integer id) {
-		this.finac_id = id;
+		this.finacid = id;
 	}
 
 	public EstadoPagamento getEstadoPagamento() {
@@ -102,13 +99,33 @@ public class FinanceiroPagar implements Serializable{
 	public void setFinanceiroPagarParcela(List<FinanceiroPagarParcela> financeiroPagarParcela) {
 		this.financeiroPagarParcela = financeiroPagarParcela;
 	}
+	
+	
+	public Integer getFinacid() {
+		return finacid;
+	}
 
+	public void setFinacid(Integer finacid) {
+		this.finacid = finacid;
+	}
+
+	public CentroRateio getCentroRateio() {
+		return centroRateio;
+	}
+
+	public void setCentroRateio(CentroRateio centroRateio) {
+		this.centroRateio = centroRateio;
+	}
+
+	public void setEstadoPagamento(Integer estadoPagamento) {
+		this.estadoPagamento = estadoPagamento;
+	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((finac_id == null) ? 0 : finac_id.hashCode());
+		result = prime * result + ((finacid == null) ? 0 : finacid.hashCode());
 		return result;
 	}
 
@@ -121,10 +138,10 @@ public class FinanceiroPagar implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		FinanceiroPagar other = (FinanceiroPagar) obj;
-		if (finac_id == null) {
-			if (other.finac_id != null)
+		if (finacid == null) {
+			if (other.finacid != null)
 				return false;
-		} else if (!finac_id.equals(other.finac_id))
+		} else if (!finacid.equals(other.finacid))
 			return false;
 		return true;
 	}

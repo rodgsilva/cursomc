@@ -11,5 +11,8 @@ public interface FornecedorRepository extends JpaRepository<Fornecedor,Integer> 
 	
 	@Transactional(readOnly=true)
 	Fornecedor findByEmail(String email);
+	
+
+
 
 }

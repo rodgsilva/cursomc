@@ -32,8 +32,12 @@ public class Pedido implements Serializable{
 	private Date instante;
 	
 	
+	//@OneToOne(cascade=CascadeType.ALL, mappedBy="pedido")
+	//private Pagamento pagamento;
+	//Subistituido por Financeiro
+	
 	@OneToOne(cascade=CascadeType.ALL, mappedBy="pedido")
-	private Pagamento pagamento;
+	private Financeiro financeiro;
 	
 	
 	@ManyToOne
@@ -82,12 +86,14 @@ public class Pedido implements Serializable{
 		this.instante = instante;
 	}
 
-	public Pagamento getPagamento() {
-		return pagamento;
+	
+
+	public Financeiro getFinanceiro() {
+		return financeiro;
 	}
 
-	public void setPagamento(Pagamento pagamento) {
-		this.pagamento = pagamento;
+	public void setFinanceiro(Financeiro financeiro) {
+		this.financeiro = financeiro;
 	}
 
 	public Cliente getCliente() {
@@ -152,7 +158,7 @@ public class Pedido implements Serializable{
 		builder.append(", Cliente: ");
 		builder.append(getCliente().getNome());
 		builder.append(", Situação do pagamento: ");
-		builder.append(getPagamento().getEstadoPagamento().getDescricao());
+		builder.append(getFinanceiro().getEstadoPagamento().getDescricao());
 		builder.append("\nDetalhes:\n");
 		for(ItemPedido ip : getItens()) {
 		builder.append(ip.toString());
@@ -164,7 +170,6 @@ public class Pedido implements Serializable{
 	}
 
 
-	
 	
 
 }

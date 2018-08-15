@@ -21,6 +21,8 @@ public class GeraParcelaDTO extends FinanceiroPagar {
 	private Date dataVencimento;
 	private Integer numeroBanco;
 	
+	
+	
 	public GeraParcelaDTO() {
 		}
 

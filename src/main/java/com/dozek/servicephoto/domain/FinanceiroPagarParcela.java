@@ -1,7 +1,9 @@
 package com.dozek.servicephoto.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,11 +11,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
-import com.dozek.servicephoto.domain.enums.EstadoPagamento;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonTypeName;
 
 @Entity
 public class FinanceiroPagarParcela implements Serializable{
@@ -24,20 +25,28 @@ public class FinanceiroPagarParcela implements Serializable{
 	private Integer parcId;
 	
 	private String numeroDocumento;
+	
 	@JsonFormat(pattern="dd/MM/yyyy")
 	private Date dataVencimento;
 	@JsonFormat(pattern="dd/MM/yyyy")
 	private Date dataPagamento;
-	private Double valorParcela;
+	private Double  valorParcela;
+	private String  tipoDoc;
+	private Integer banco;
+	private Integer docTerceiro;
 	
 	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="financeiroPagar_id")
 	private FinanceiroPagar financeiroPagar;
 	
+	@JsonIgnore
+	@OneToMany(mappedBy="financPagarParcela")
+	private List<ContaMovimento> contaMovimento = new ArrayList<>();
+
+	
 	public FinanceiroPagarParcela() {
 	}
-
 
 
 	public FinanceiroPagarParcela(Integer parcId, String numeroDocumento, Date dataVencimento, Date dataPagamento,
@@ -100,6 +109,45 @@ public class FinanceiroPagarParcela implements Serializable{
 		this.financeiroPagar = financeiroPagar;
 	}
 
+
+	public String getTipoDoc() {
+		return tipoDoc;
+	}
+
+
+	public void setTipoDoc(String tipoDoc) {
+		this.tipoDoc = tipoDoc;
+	}
+
+
+	public Integer getBanco() {
+		return banco;
+	}
+
+
+	public void setBanco(Integer banco) {
+		this.banco = banco;
+	}
+
+
+	public Integer getDocTerceiro() {
+		return docTerceiro;
+	}
+
+
+	public void setDocTerceiro(Integer docTerceiro) {
+		this.docTerceiro = docTerceiro;
+	}
+
+
+	public List<ContaMovimento> getContaMovimento() {
+		return contaMovimento;
+	}
+
+
+	public void setContaMovimento(List<ContaMovimento> contaMovimento) {
+		this.contaMovimento = contaMovimento;
+	}
 
 
 	@Override

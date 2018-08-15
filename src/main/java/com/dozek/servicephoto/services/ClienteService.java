@@ -45,6 +45,7 @@ public class ClienteService {
 		if(user==null ||!user.hasRole(Perfil.ADMIN)&& !id.equals(user.getId())) {
 			throw new AuthorizationException("Acesso Negado");
 		}
+		 String name2;
 		
 		Cliente obj=repo.findOne(id);
 		if(obj == null) {
@@ -103,7 +104,8 @@ public class ClienteService {
 	}
 	
 	public Cliente fromDTO(ClienteDTO objDto) {
-		return new Cliente(objDto.getId(), objDto.getNome(), objDto.getEmail(), null, null,null);
+		return new Cliente(objDto.getId(), objDto.getNome(), objDto.getEmail(), objDto.getCpfOuCnpj(),null,null);
+		
 		
 	}
 	
@@ -126,7 +128,9 @@ public class ClienteService {
 	private void updateData(Cliente newObj, Cliente obj) {
 		newObj.setNome(obj.getNome());
 		newObj.setEmail(obj.getEmail());
-	}
+		newObj.setCpfOuCnpj(obj.getCpfOuCnpj()); 
+		
+	}  
 
 
 }

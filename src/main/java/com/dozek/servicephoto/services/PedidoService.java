@@ -13,12 +13,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.dozek.servicephoto.domain.Cliente;
 import com.dozek.servicephoto.domain.ItemPedido;
-import com.dozek.servicephoto.domain.PagamentoComBoleto;
 import com.dozek.servicephoto.domain.Pedido;
 import com.dozek.servicephoto.domain.enums.EstadoPagamento;
 import com.dozek.servicephoto.repositories.ClienteRepository;
+import com.dozek.servicephoto.repositories.FinanceiroRepository;
 import com.dozek.servicephoto.repositories.ItemPedidoRepository;
-import com.dozek.servicephoto.repositories.PagamentoRepository;
 import com.dozek.servicephoto.repositories.PedidoRepository;
 import com.dozek.servicephoto.repositories.ProdutoRepository;
 import com.dozek.servicephoto.security.UserSS;
@@ -35,7 +34,7 @@ public class PedidoService {
 	@Autowired
 	private BoletoService boletoService;
 	@Autowired
-	private PagamentoRepository pagamentoRepository;
+	private FinanceiroRepository financeiroRepository;
 	@Autowired
 	private ProdutoRepository produtoRepository;
 	@Autowired
@@ -61,14 +60,14 @@ public class PedidoService {
 		obj.setId(null);
 		obj.setInstante(new Date());
 		obj.setCliente(clienteRepository.findOne(obj.getCliente().getId()));
-		obj.getPagamento().setEstadoPagamento(EstadoPagamento.PENDENTE);
-		obj.getPagamento().setPedido(obj);
-		if (obj.getPagamento() instanceof PagamentoComBoleto) {
-			PagamentoComBoleto pagto = (PagamentoComBoleto) obj.getPagamento();
-			boletoService.preencherPagamentoComBoleto(pagto,obj.getInstante());
-		}
+		obj.getFinanceiro().setEstadoPagamento(EstadoPagamento.PENDENTE);
+		obj.getFinanceiro().setPedido(obj);
+		//if (obj.getFinanceiro() instanceof PagamentoComBoleto) {
+		//	PagamentoComBoleto pagto = (PagamentoComBoleto) obj.getPagamento();
+		//	boletoService.preencherPagamentoComBoleto(pagto,obj.getInstante());
+	//	}
 		obj = repo.save(obj);
-		pagamentoRepository.save(obj.getPagamento());
+		financeiroRepository.save(obj.getFinanceiro());
 		for(ItemPedido ip : obj.getItens()) {
 			ip.setDesconto(0.0);
 			ip.setProduto(produtoRepository.findOne(ip.getProduto().getId()));

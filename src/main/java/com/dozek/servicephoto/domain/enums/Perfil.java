@@ -3,8 +3,9 @@ package com.dozek.servicephoto.domain.enums;
 public enum Perfil {
 	
 	ADMIN(1,"ROLE_ADMIN"),
-	CLIENTE(2,"ROLE_CLIENTE"),
-	FOR(3,"ROLE_FORNECEDOR");
+	USUARIO(2,"ROLE_USUARIO"),
+	CLIENTE(3,"ROLE_CLIENTE"),
+	FOR(4,"ROLE_FORNECEDOR");
 	
 	private int cod;
 	private String descricao;

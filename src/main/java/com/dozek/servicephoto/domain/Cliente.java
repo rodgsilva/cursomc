@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -27,18 +28,23 @@ public class Cliente implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="codigo")
 	private Integer id;
 	
+	@Column(name="razaosocial")
 	private String nome;
 	private String email;
+	
+	@Column(name="cnpj")
 	private String cpfOuCnpj;
+	
 	private Integer tipo;
 	
 	@JsonIgnore
 	private String senha;
 	
 	
-	
+		
 	@OneToMany(mappedBy="cliente", cascade=CascadeType.ALL)
 	private List<Endereco> endereco= new ArrayList<>();
 	
@@ -54,7 +60,15 @@ public class Cliente implements Serializable{
 	@OneToMany(mappedBy="cliente")
 	private List<Pedido> pedidos= new ArrayList<>();
 	
-		
+	@JsonIgnore
+	@OneToMany(mappedBy="cliente")
+	private List<AlbumAluno> albumAluno= new ArrayList<>();
+	
+	@JsonIgnore
+	@OneToMany(mappedBy="cliente")
+	private List<ContaMovimento> montaMovimento = new ArrayList<>();
+
+
 	public Cliente() {
 		addPerfil(Perfil.CLIENTE);
 	}
@@ -166,9 +180,45 @@ public class Cliente implements Serializable{
 		this.pedidos = pedidos;
 	}
 	
+
+	public List<AlbumAluno> getAlbumAluno() {
+		return albumAluno;
+	}
+
+
+	public void setAlbumAluno(List<AlbumAluno> albumAluno) {
+		this.albumAluno = albumAluno;
+	}
 	
 	
-	
+	public Set<String> getTelefones() {
+		return telefones;
+	}
+
+
+	public void setTelefones(Set<String> telefones) {
+		this.telefones = telefones;
+	}
+
+
+	public List<ContaMovimento> getMontaMovimento() {
+		return montaMovimento;
+	}
+
+
+	public void setMontaMovimento(List<ContaMovimento> montaMovimento) {
+		this.montaMovimento = montaMovimento;
+	}
+
+
+	public void setTipo(Integer tipo) {
+		this.tipo = tipo;
+	}
+
+
+	public void setPerfis(Set<Integer> perfis) {
+		this.perfis = perfis;
+	}
 
 
 	@Override

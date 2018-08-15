@@ -36,7 +36,7 @@ public class ItemPedido  implements Serializable {
 	public double getSubTotal() {
 		return (preco - desconto)*quantidade;
 	}
-	 @JsonIgnore
+	@JsonIgnore
 	public Pedido getPedido() {
 		return id.getPedido();
 	}
@@ -83,6 +83,7 @@ public class ItemPedido  implements Serializable {
 	public void setPreco(Double preco) {
 		this.preco = preco;
 	}
+	
 
 	@Override
 	public int hashCode() {

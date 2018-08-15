@@ -9,18 +9,19 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.dozek.servicephoto.domain.Categoria;
+import com.dozek.servicephoto.domain.CentroRateio;
 import com.dozek.servicephoto.domain.Cidade;
 import com.dozek.servicephoto.domain.Cliente;
+import com.dozek.servicephoto.domain.Empresa;
 import com.dozek.servicephoto.domain.Endereco;
 import com.dozek.servicephoto.domain.Estado;
+import com.dozek.servicephoto.domain.Financeiro;
 import com.dozek.servicephoto.domain.FinanceiroPagar;
 import com.dozek.servicephoto.domain.FinanceiroPagarParcela;
+import com.dozek.servicephoto.domain.FinanceiroParcela;
 import com.dozek.servicephoto.domain.Fornecedor;
 import com.dozek.servicephoto.domain.ItemPedido;
 import com.dozek.servicephoto.domain.ItemPedidoCompra;
-import com.dozek.servicephoto.domain.Pagamento;
-import com.dozek.servicephoto.domain.PagamentoComBoleto;
-import com.dozek.servicephoto.domain.PagamentoComCartao;
 import com.dozek.servicephoto.domain.Pedido;
 import com.dozek.servicephoto.domain.PedidoCompra;
 import com.dozek.servicephoto.domain.Produto;
@@ -28,11 +29,14 @@ import com.dozek.servicephoto.domain.enums.EstadoPagamento;
 import com.dozek.servicephoto.domain.enums.Perfil;
 import com.dozek.servicephoto.domain.enums.TipoCliente;
 import com.dozek.servicephoto.repositories.CategoriaRepository;
+import com.dozek.servicephoto.repositories.CentroRateioRepository;
 import com.dozek.servicephoto.repositories.CidadeRepository;
 import com.dozek.servicephoto.repositories.ClienteRepository;
+import com.dozek.servicephoto.repositories.EmpresaRepository;
 import com.dozek.servicephoto.repositories.EnderecoRepository;
 import com.dozek.servicephoto.repositories.EstadoRepository;
 import com.dozek.servicephoto.repositories.FinanceiroPagarRepository;
+import com.dozek.servicephoto.repositories.FinanceiroRepository;
 import com.dozek.servicephoto.repositories.FornecedorRepository;
 import com.dozek.servicephoto.repositories.ItemPedidoCompraRepository;
 import com.dozek.servicephoto.repositories.ItemPedidoRepository;
@@ -66,7 +70,7 @@ public class DBService {
 	@Autowired
 	private PedidoCompraRepository pedidoCompraRepository;
 	@Autowired
-	private PagamentoRepository pagamentoRepository;
+	private FinanceiroRepository pagamentoRepository;
 	@Autowired
 	private ItemPedidoRepository itempedidoRepository;
 	@Autowired
@@ -75,6 +79,10 @@ public class DBService {
 	private FinanceiroPagarRepository finenceiroRepository;
     @Autowired
 	private FornecedorRepository fornecedorRepository;
+    @Autowired
+	private EmpresaRepository empresaRepository;
+    @Autowired
+	private CentroRateioRepository centroRateioRepository;
 
 	@Autowired
 	private ProdutoRepository prodRepo;
@@ -228,11 +236,11 @@ public class DBService {
 		
 		Fornecedor for1= new Fornecedor(null, "CrisME", "Cris.tonetti@gmail.com", "13101503000103",
 				TipoCliente.PESSOAJURIDICA, pe.encode("123"));
-	//	for1.getTelefone().addAll(Arrays.asList("27363323", "93838393"));
+		for1.getTelefones().addAll(Arrays.asList("27363323", "93838393"));
 		for1.addPerfil(Perfil.FOR);
 		Fornecedor for2= new Fornecedor(null, "PedroJrME", "rod_feroz@Hotmail.com", "15151241000109",
 				TipoCliente.PESSOAJURIDICA, pe.encode("123"));
-	//	for2.getTelefone().addAll(Arrays.asList("27363323", "93838393"));
+		for2.getTelefones().addAll(Arrays.asList("27363323", "93838393"));
 		for2.addPerfil(Perfil.FOR);
 		
 		Fornecedor for3= new Fornecedor(null, "Maria da Silva Gomes", "gomes@gmail.com", "57955364000142",
@@ -244,7 +252,8 @@ public class DBService {
 		Cliente cli1 = new Cliente(null, "Maria da Silva", "rod_feroz@hotmail.com", "36378913377",
 				TipoCliente.PESSOAFISICA, pe.encode("123"));
 		cli1.getTelefone().addAll(Arrays.asList("27363328", "93837393"));
-
+		cli1.addPerfil(Perfil.USUARIO);
+		
 		Cliente cli2 = new Cliente(null, "Ana Costa", "rod.gomes.silva@gmail.com", "31628882740",
 				TipoCliente.PESSOAFISICA, pe.encode("123"));
 		cli2.getTelefone().addAll(Arrays.asList("27363323", "93838393"));
@@ -275,8 +284,10 @@ public class DBService {
 		Pedido ped1 = new Pedido(null, sdf.parse("30/09/2017  10:32"), cli1, e1);
 		Pedido ped2 = new Pedido(null, sdf.parse("10/10/2017  19:35"), cli1, e2);
 		
-		PedidoCompra pedComp1 = new PedidoCompra(null, sdf.parse("30/09/2018  10:32"), for1, e4);
-		PedidoCompra pedComp2 = new PedidoCompra(null, sdf.parse("10/10/2018  19:35"), for2, e5);
+		 Empresa emp = empresaRepository.findOne(1);
+				
+		PedidoCompra pedComp1 = new PedidoCompra(null, sdf.parse("30/09/2018  10:32"), for1, emp);
+		PedidoCompra pedComp2 = new PedidoCompra(null, sdf.parse("10/10/2018  19:35"), for2, emp);
 
 		FinanceiroPagar fincpt1 = new FinanceiroPagar(null, EstadoPagamento.QUITADO, pedComp1, 600.00);
 		pedComp1.setFinanceiroPagar(fincpt1);
@@ -298,14 +309,19 @@ public class DBService {
 		//pedComp2.setFinanceiroPagar(fincpt2);
 		
 		
+		CentroRateio rt = centroRateioRepository.findOne(1);
+		CentroRateio rt2 = centroRateioRepository.findOne(1);
 		
-		Pagamento pagto1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, ped1, 6);
-		ped1.setPagamento(pagto1);
-
-		Pagamento pagto2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, ped2, sdf.parse("20/10/2017 00:00"),
-				null);
-		ped2.setPagamento(pagto2);
-
+		Financeiro pagto1 = new Financeiro(null, EstadoPagamento.QUITADO, ped1, 600, rt);//(null, EstadoPagamento.QUITADO, ped1, 6);
+		ped1.setFinanceiro(pagto1);
+		FinanceiroParcela fincPar = new FinanceiroParcela(null, "2018/1", sdf.parse("30/10/2018  10:32"), null,600.00, pagto1);
+		pagto1.getFinanceiroParcela().addAll(Arrays.asList(fincPar));
+		
+		Financeiro pagto2 = new Financeiro(null, EstadoPagamento.QUITADO, ped2, 600, rt2);//(null, EstadoPagamento.PENDENTE, ped2, sdf.parse("20/10/2017 00:00"),
+				//null);
+		ped2.setFinanceiro(pagto2);
+		FinanceiroParcela fincPar2 = new FinanceiroParcela(null, "2018/1", sdf.parse("30/10/2018  10:32"), sdf.parse("30/10/2018  10:32"),600.00, pagto2);
+		pagto2.getFinanceiroParcela().addAll(Arrays.asList(fincPar2));
 		cli1.getPedidos().addAll(Arrays.asList(ped1, ped2));
 		
 		for1.getPedidoCompras().addAll(Arrays.asList(pedComp1));

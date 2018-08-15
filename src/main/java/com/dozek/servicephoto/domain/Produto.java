@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,6 +25,7 @@ public class Produto implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="codigo")
 	private Integer id;
 	private String nome;
 	private Double preco;
@@ -39,6 +41,10 @@ public class Produto implements Serializable{
 	@JsonIgnore
 	@OneToMany(mappedBy="id.produto")
 	private Set<ItemPedido> itens = new HashSet<>();
+	
+	@JsonIgnore
+	@OneToMany(mappedBy="id.produto")
+	private Set<ItemAlbum> itensAlbum = new HashSet<>();
 	
 	
 	@JsonIgnore
@@ -73,6 +79,14 @@ public class Produto implements Serializable{
 		return lista;
 	}
 	
+	@JsonIgnore
+	public List<AlbumAluno> getAlbumAluno(){
+		List<AlbumAluno> lista =new ArrayList<>();
+		for (ItemAlbum x : itensAlbum) {
+			lista.add(x.getAlbumAluno());
+		}
+		return lista;
+	}
 	
 	
 
@@ -123,6 +137,15 @@ public class Produto implements Serializable{
 
 	public void setItensComp(Set<ItemPedidoCompra> itensComp) {
 		this.itensComp = itensComp;
+	}
+	
+
+	public Set<ItemAlbum> getItensAlbum() {
+		return itensAlbum;
+	}
+
+	public void setItensAlbum(Set<ItemAlbum> itensAlbum) {
+		this.itensAlbum = itensAlbum;
 	}
 
 	@Override

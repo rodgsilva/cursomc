@@ -19,7 +19,7 @@ public class ItemPedidoCompra  implements Serializable {
 	
 	private Double desconto;
 	private Integer quantidade;
-	private Double preco;
+	private double preco;
 
 	public ItemPedidoCompra() {
 	}

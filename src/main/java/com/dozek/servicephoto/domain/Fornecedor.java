@@ -42,9 +42,9 @@ public class Fornecedor implements Serializable{
 	@OneToMany(mappedBy="fornecedor", cascade=CascadeType.ALL)
 	private List<Endereco> endereco= new ArrayList<>();
 	
-/*	@ElementCollection
-	@CollectionTable(name="TELEFONE")
-	private Set<String> telefones = new HashSet<>();*/
+	@ElementCollection
+	@CollectionTable(name="TELEFONE_FORN")
+	private Set<String> telefones = new HashSet<>();
 	
 	@ElementCollection(fetch=FetchType.EAGER)
 	 @CollectionTable(name="PERFIS")
@@ -146,15 +146,18 @@ public class Fornecedor implements Serializable{
 		this.endereco = endereco;
 	}
 
+	
 
-/*	public Set<String> getTelefone() {
+	public Set<String> getTelefones() {
 		return telefones;
 	}
 
 
-	public void setTelefone(Set<String> telefone) {
-		this.telefones = telefone;
-	}*/
+	public void setTelefones(Set<String> telefones) {
+		this.telefones = telefones;
+	}
+
+
 	public List<PedidoCompra> getPedidoCompras() {
 		return pedidoCompras;
 	}

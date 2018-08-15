@@ -42,15 +42,16 @@ public class PedidoCompra implements Serializable{
 	
 	@ManyToOne
 	@JoinColumn(name="endereco_de_enterga_id")
-	private Endereco enderecoDeEntrega;
+	private Empresa enderecoDeEntrega;
 	
 	@OneToMany(mappedBy="id.pedidoCompra")
 	private Set<ItemPedidoCompra> itens = new HashSet<>();
 	
+	
 	public PedidoCompra() {
 	}
 
-	public PedidoCompra(Integer id, Date instante,Fornecedor fornecedor, Endereco enderecoDeEntrega) {
+	public PedidoCompra(Integer id, Date instante,Fornecedor fornecedor, Empresa enderecoDeEntrega) {
 		super();
 		this.id = id;
 		this.instante = instante;
@@ -98,11 +99,11 @@ public class PedidoCompra implements Serializable{
 		this.fornecedor = fornecedor;
 	}
 
-	public Endereco getEnderecoDeEntrega() {
+	public Empresa getEnderecoDeEntrega() {
 		return enderecoDeEntrega;
 	}
 
-	public void setEnderecoDeEntrega(Endereco enderecoDeEntrega) {
+	public void setEnderecoDeEntrega(Empresa enderecoDeEntrega) {
 		this.enderecoDeEntrega = enderecoDeEntrega;
 	}
 	

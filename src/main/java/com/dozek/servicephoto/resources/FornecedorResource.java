@@ -64,13 +64,13 @@ public class FornecedorResource {
 		return ResponseEntity.noContent().build();
 		
 	}
-	@PreAuthorize("hasAnyRole('ADMIN')")
+	@PreAuthorize("hasAnyRole('USUARIO')")
 	@RequestMapping(value="/{id}",method=RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
-	@PreAuthorize("hasAnyRole('ADMIN')")
+	@PreAuthorize("hasAnyRole('USUARIO')")
 	@RequestMapping(method=RequestMethod.GET)
 	public ResponseEntity<List<FornecedorDTO>> findAll() {
 		
@@ -80,7 +80,7 @@ public class FornecedorResource {
 		
 	}
 	
-	@PreAuthorize("hasAnyRole('ADMIN')")
+	@PreAuthorize("hasAnyRole('USUARIO')")
 	@RequestMapping(value="/page",method=RequestMethod.GET)
 	public ResponseEntity<Page<FornecedorDTO>> findPage(
 		    @RequestParam(value="page",defaultValue="0")Integer page,
