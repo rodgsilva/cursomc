@@ -4,9 +4,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.dozek.servicephoto.domain.FinanceiroPagarParcela;
+import com.dozek.servicephoto.domain.FinanceiroParcela;
 
 @Repository
-public interface FinanceiroParcelaRepository extends JpaRepository<FinanceiroPagarParcela,Integer> {
+public interface FinanceiroParcelaRepository extends JpaRepository<FinanceiroParcela,Integer> {
 	
 	//@Query("SELECT obj FROM Cidade obj WHERE obj.estado.id = :estadoId ORDER BY obj.nome")
 	//public List<Cidade> findCidades(@Param("estadoId")Integer estado_id);

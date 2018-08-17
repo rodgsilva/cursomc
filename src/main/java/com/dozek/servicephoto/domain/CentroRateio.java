@@ -29,18 +29,19 @@ public class CentroRateio  implements Serializable{
 	
 	private String nome;
 	
-	@JsonFormat(pattern="dd/MM/yyyy")
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
 	private Date inicio;
 	
-	@JsonFormat(pattern="dd/MM/yyyy")
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
 	private Date termino;
 	
 	@OneToMany(mappedBy="id.centroRateio")
 	private Set<ItemRateioCentroCusto> itensRateio = new HashSet<>();
-	 
+	@JsonIgnore
 	@OneToMany(mappedBy="centroRateio", cascade=CascadeType.ALL)
 	private List<Financeiro> financeiro= new ArrayList<>();
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="centroRateio", cascade=CascadeType.ALL)
 	private List<Financeiro> financeiroPagar= new ArrayList<>();
 

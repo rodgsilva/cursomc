@@ -55,6 +55,10 @@ public class Fornecedor implements Serializable{
 	@OneToMany(mappedBy="fornecedor")
 	private List<PedidoCompra> pedidoCompras = new ArrayList<>();
 	
+	@JsonIgnore
+	@OneToMany(mappedBy="fornecedor")
+	private List<ContaMovimento> contaMovimento = new ArrayList<>();
+
 		
 	public Fornecedor() {
 		

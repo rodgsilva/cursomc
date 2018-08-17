@@ -78,17 +78,6 @@ public class ItemRateioCentroCusto implements Serializable{
 
 
 
-	/*public Set<CentroRateio> getCentroRateio() {
-		return centroRateio;
-	}
-
-
-
-	public void setCentroRateio(Set<CentroRateio> centroRateio) {
-		this.centroRateio = centroRateio;
-	}
-
-*/
 
 	public double getPorcento() {
 		return porcento;

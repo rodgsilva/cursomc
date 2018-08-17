@@ -24,6 +24,8 @@ public class Conta implements Serializable{
 	private String  nome;
 	private Integer contaCorrente;
 	private Integer digito;
+	private String agencia;
+	
 	
 	@JsonIgnore
 	@OneToMany(mappedBy="conta")
@@ -32,6 +34,21 @@ public class Conta implements Serializable{
 	public Conta() {		
 	}
 	
+		
+
+	public Conta(Integer id, Integer codigoBanco, String nome, Integer contaCorrente, Integer digito,
+			List<ContaMovimento> contaMovimento) {
+		super();
+		this.id = id;
+		this.codigoBanco = codigoBanco;
+		this.nome = nome;
+		this.contaCorrente = contaCorrente;
+		this.digito = digito;
+		this.contaMovimento = contaMovimento;
+	}
+
+
+
 
 	public Integer getId() {
 		return id;
@@ -91,6 +108,16 @@ public class Conta implements Serializable{
 	public void setContaMovimento(List<ContaMovimento> contaMovimento) {
 		this.contaMovimento = contaMovimento;
 	}
+	
+	
+	public String getAgencia() {
+		return agencia;
+	}
+
+	public void setAgencia(String agencia) {
+		this.agencia = agencia;
+	}
+
 
 
 	@Override

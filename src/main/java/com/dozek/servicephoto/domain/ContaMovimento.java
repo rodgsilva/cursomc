@@ -1,6 +1,7 @@
 package com.dozek.servicephoto.domain;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 
 @Entity
@@ -19,8 +22,15 @@ public class ContaMovimento implements Serializable{
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="codigo")
 	private Integer id;
+	
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
+	private Date dtMovimento;
+	
+	
 	private String descricao;
 	private Double valor;	
+	@Column(name="mov",length =3)
+	private String mov;
 	@Column(name="tipoMov",length =1)
 	private String tipoMov;
 	private String obs;
@@ -32,6 +42,10 @@ public class ContaMovimento implements Serializable{
 	@ManyToOne
 	@JoinColumn(name="cliente")
 	private Cliente cliente;
+	
+	@ManyToOne
+	@JoinColumn(name="fornecedor")
+	private Fornecedor fornecedor;
 	
 	@ManyToOne
 	@JoinColumn(name="centroRateio")
@@ -48,6 +62,27 @@ public class ContaMovimento implements Serializable{
 	
 	public ContaMovimento() {
 	}
+	
+	
+
+
+	public ContaMovimento(Integer id, String descricao, Double valor, String tipoMov, String obs, Conta conta,
+			Cliente cliente, CentroRateio centroRateio, FinanceiroParcela financParcela,
+			FinanceiroPagarParcela financPagarParcela) {
+		super();
+		this.id = id;
+		this.descricao = descricao;
+		this.valor = valor;
+		this.tipoMov = tipoMov;
+		this.obs = obs;
+		this.conta = conta;
+		this.cliente = cliente;
+		this.centroRateio = centroRateio;
+		this.financParcela = financParcela;
+		this.financPagarParcela = financPagarParcela;
+	}
+
+
 
 
 	public Integer getId() {
@@ -148,6 +183,38 @@ public class ContaMovimento implements Serializable{
 	public void setFinancPagarParcela(FinanceiroPagarParcela financPagarParcela) {
 		this.financPagarParcela = financPagarParcela;
 	}
+	
+	
+	public Date getDtMovimento() {
+		return dtMovimento;
+	}
+
+
+	public void setDtMovimento(Date dtMovimento) {
+		this.dtMovimento = dtMovimento;
+	}
+
+
+	public String getMov() {
+		return mov;
+	}
+
+
+	public void setMov(String mov) {
+		this.mov = mov;
+	}
+	
+	
+	public Fornecedor getFornecedor() {
+		return fornecedor;
+	}
+
+
+	public void setFornecedor(Fornecedor fornecedor) {
+		this.fornecedor = fornecedor;
+	}
+
+
 
 
 	@Override

@@ -66,7 +66,7 @@ public class Cliente implements Serializable{
 	
 	@JsonIgnore
 	@OneToMany(mappedBy="cliente")
-	private List<ContaMovimento> montaMovimento = new ArrayList<>();
+	private List<ContaMovimento> contaMovimento = new ArrayList<>();
 
 
 	public Cliente() {
@@ -201,19 +201,15 @@ public class Cliente implements Serializable{
 	}
 
 
-	public List<ContaMovimento> getMontaMovimento() {
-		return montaMovimento;
+	public List<ContaMovimento> getcontaMovimento() {
+		return contaMovimento;
 	}
 
 
-	public void setMontaMovimento(List<ContaMovimento> montaMovimento) {
-		this.montaMovimento = montaMovimento;
+	public void setMontaMovimento(List<ContaMovimento> contaMovimento) {
+		this.contaMovimento = contaMovimento;
 	}
 
-
-	public void setTipo(Integer tipo) {
-		this.tipo = tipo;
-	}
 
 
 	public void setPerfis(Set<Integer> perfis) {
