@@ -16,6 +16,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.dozek.servicephoto.domain.enums.Perfil;
@@ -43,7 +45,6 @@ public class Cliente implements Serializable{
 	@JsonIgnore
 	private String senha;
 	
-	
 		
 	@OneToMany(mappedBy="cliente", cascade=CascadeType.ALL)
 	private List<Endereco> endereco= new ArrayList<>();
@@ -68,6 +69,9 @@ public class Cliente implements Serializable{
 	@OneToMany(mappedBy="cliente")
 	private List<ContaMovimento> contaMovimento = new ArrayList<>();
 
+	@ManyToOne
+	@JoinColumn(name="escola_id")
+	private Escola escola;
 
 	public Cliente() {
 		addPerfil(Perfil.CLIENTE);
@@ -214,6 +218,16 @@ public class Cliente implements Serializable{
 
 	public void setPerfis(Set<Integer> perfis) {
 		this.perfis = perfis;
+	}
+
+	
+	public Escola getEscola() {
+		return escola;
+	}
+
+
+	public void setEscola(Escola escola) {
+		this.escola = escola;
 	}
 
 

@@ -40,13 +40,14 @@ public class Escola implements Serializable{
 	private String bairro;
 	private String cep;
 	
-
-
 	
 	@JsonIgnore
 	@OneToMany(mappedBy="escola")
 	private List<ContratoPrincipal> contratoPrincipal= new ArrayList<>();
 	
+	@JsonIgnore
+	@OneToMany(mappedBy="escola")
+	private List<Cliente> cliente = new ArrayList<>();
 	
 	
 	public Escola() {		
@@ -138,6 +139,15 @@ public class Escola implements Serializable{
 
 	public void setContratoPrincipal(List<ContratoPrincipal> contratoPrincipal) {
 		this.contratoPrincipal = contratoPrincipal;
+	}
+	
+	
+	public List<Cliente> getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(List<Cliente> cliente) {
+		this.cliente = cliente;
 	}
 
 	@Override

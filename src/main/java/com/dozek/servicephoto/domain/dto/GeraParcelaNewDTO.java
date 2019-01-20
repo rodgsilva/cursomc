@@ -12,6 +12,7 @@ public class GeraParcelaNewDTO implements Serializable{
 	private Integer pedidoCompraId;
 	private String EstadoPagar;
 	private double valorTotal;
+	private String nomeRateio;
 
 	
 	public GeraParcelaNewDTO(FinanceiroPagar obj) {
@@ -19,7 +20,7 @@ public class GeraParcelaNewDTO implements Serializable{
 		pedidoCompraId = obj.getPedidoCompra().getId();
 		EstadoPagar = (obj.getEstadoPagamento()==null) ? "não informado" :obj.getEstadoPagamento().getDescricao();
 		valorTotal = obj.getValorTotal();
-		
+		nomeRateio = (obj.getCentroRateio()==null)? "não informado" : obj.getCentroRateio().getNome();
 	}
 
 
@@ -28,7 +29,6 @@ public class GeraParcelaNewDTO implements Serializable{
 
 
 
-	
 	public Integer getId() {
 		return id;
 	}
@@ -38,7 +38,17 @@ public class GeraParcelaNewDTO implements Serializable{
 	public void setId(Integer id) {
 		this.id = id;
 	}
+	
+	
 
+	public String getNomeRateio() {
+		return nomeRateio;
+	}
+
+
+	public void setNomeRateio(String nomeRateio) {
+		this.nomeRateio = nomeRateio;
+	}
 
 
 	public String getEstadoPagar() {

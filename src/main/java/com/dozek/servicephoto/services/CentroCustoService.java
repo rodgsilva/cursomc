@@ -1,5 +1,7 @@
 package com.dozek.servicephoto.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -7,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.dozek.servicephoto.domain.Categoria;
 import com.dozek.servicephoto.domain.CentroCusto;
 import com.dozek.servicephoto.domain.CentroRateio;
+import com.dozek.servicephoto.domain.Cliente;
 import com.dozek.servicephoto.domain.ItemRateioCentroCusto;
 import com.dozek.servicephoto.domain.Pedido;
 import com.dozek.servicephoto.repositories.CentroCustoRepository;
@@ -56,6 +59,15 @@ public class CentroCustoService {
 		
 		
 	}
+	
+	public List<CentroCusto>findCentroAll(){
+		return centroCustoRepository.findAll();
+	}
+	public List<CentroRateio>findAll(){
+		return centroRateioRepository.findAll();
+	}
+	
+	
 	
 
 }

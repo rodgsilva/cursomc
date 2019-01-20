@@ -9,19 +9,16 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.dozek.servicephoto.domain.Categoria;
-import com.dozek.servicephoto.domain.Cliente;
 import com.dozek.servicephoto.domain.FinanceiroPagar;
 import com.dozek.servicephoto.domain.FinanceiroPagarParcela;
 import com.dozek.servicephoto.domain.PedidoCompra;
-import com.dozek.servicephoto.domain.dto.ClienteDTO;
 import com.dozek.servicephoto.domain.dto.GeraParcelaDTO;
 import com.dozek.servicephoto.domain.dto.PagarParcelaDTO;
 import com.dozek.servicephoto.domain.enums.EstadoPagamento;
 import com.dozek.servicephoto.repositories.FinanceiroPagarParcelaRepository;
 import com.dozek.servicephoto.repositories.FinanceiroPagarRepository;
 import com.dozek.servicephoto.repositories.PedidoCompraRepository;
-import com.jayway.jsonpath.internal.function.text.Length;
+//import com.jayway.jsonpath.internal.function.text.Length;
 
 @Service
 public class GeraFinanceiroService {

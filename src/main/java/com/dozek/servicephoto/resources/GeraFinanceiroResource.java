@@ -19,14 +19,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.dozek.servicephoto.domain.Categoria;
 import com.dozek.servicephoto.domain.FinanceiroPagar;
 import com.dozek.servicephoto.domain.FinanceiroPagarParcela;
 import com.dozek.servicephoto.domain.PedidoCompra;
-import com.dozek.servicephoto.domain.dto.CategoriaDTO;
 import com.dozek.servicephoto.domain.dto.GeraParcelaNewDTO;
 import com.dozek.servicephoto.domain.dto.PagarParcelaDTO;
 import com.dozek.servicephoto.domain.enums.EstadoPagamento;
+import com.dozek.servicephoto.repositories.CentroRateioRepository;
 import com.dozek.servicephoto.services.GeraFinanceiroService;
 
 @RestController
@@ -35,6 +34,8 @@ public class GeraFinanceiroResource {
 	
 	@Autowired
 	private GeraFinanceiroService service; 
+	 @Autowired
+	 private CentroRateioRepository rateioRepository;
 	
 	@PreAuthorize("hasAnyRole('USUARIO')")
 	@RequestMapping(value="/{Id}",method=RequestMethod.GET)
@@ -58,6 +59,8 @@ public class GeraFinanceiroResource {
 	@RequestMapping(value="/{compraId}/parcelado",method=RequestMethod.POST)
 	public ResponseEntity<Void> insert(@Valid @RequestBody FinanceiroPagar obj,@PathVariable Integer compraId ){// @RequestBody FinanceiroPagar obj){
 		PedidoCompra ped = service.findByPedido(compraId);
+		System.out.println(obj.getCentroRateio().getId());
+		obj.setCentroRateio(rateioRepository.findOne(obj.getCentroRateio().getId()));
 		obj.setPedidoCompra(ped);
 		obj.setEstadoPagamento(EstadoPagamento.PENDENTE);
 		

@@ -117,10 +117,7 @@ public class FinanceiroPagar implements Serializable{
 		this.centroRateio = centroRateio;
 	}
 
-	public void setEstadoPagamento(Integer estadoPagamento) {
-		this.estadoPagamento = estadoPagamento;
-	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

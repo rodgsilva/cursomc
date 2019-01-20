@@ -61,16 +61,6 @@ public class CentroRateio  implements Serializable{
 		//this.itensRateio = itensRateio;
 	}
 	
-	/*@JsonIgnore
-	public List<CentroCustoService> getCentroCusto(){
-		List<CentroCustoService> lista =new ArrayList<>();
-		for (ItemRateioCentroCusto x : itensRateio) {
-			lista.add(x.getCentroCusto());
-		}
-		return lista;
-	}
-*/
-
 
 	public Integer getId() {
 		return id;

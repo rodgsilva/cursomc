@@ -15,9 +15,9 @@ import com.dozek.servicephoto.services.SmtpEmailService;
 @Configuration
 @Profile("dev")
 public class DevConfig {
-	
-	@Autowired
-	private DBService dbService;
+//	
+//	@Autowired
+//	private DBService dbService;
 	
 	@Value("${spring.jpa.hibernate.ddl-auto}")
 	private String strategy;

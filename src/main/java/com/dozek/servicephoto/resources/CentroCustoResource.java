@@ -1,14 +1,16 @@
 package com.dozek.servicephoto.resources;
 
 
-import java.awt.image.RasterFormatException;
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,8 +20,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.dozek.servicephoto.domain.CentroCusto;
 import com.dozek.servicephoto.domain.CentroRateio;
-import com.dozek.servicephoto.domain.Endereco;
-import com.dozek.servicephoto.domain.dto.EnderecoDTO;
+import com.dozek.servicephoto.domain.dto.CentroRateioDTO;
 import com.dozek.servicephoto.services.CentroCustoService;
 
 @RestController
@@ -34,6 +35,15 @@ public class CentroCustoResource {
 		
 	CentroCusto obj = service.find(id);
 		
+		return ResponseEntity.ok().body(obj);
+		
+	}
+	
+	@PreAuthorize("hasAnyRole('ADMIN')")
+	@GetMapping
+	public ResponseEntity<List<CentroCusto>>findAll(){
+		
+		List<CentroCusto> obj = service.findCentroAll();
 		return ResponseEntity.ok().body(obj);
 		
 	}
@@ -57,8 +67,21 @@ public class CentroCustoResource {
 		return ResponseEntity.created(uri).build();
 	}
 	
-	/*@RequestMapping(method=RequestMethod.GET)
-	public ResponseEntity<Page<CentroCustoDTO>> findPage(
+	@PreAuthorize("hasAnyRole('ADMIN')")
+	@GetMapping(value="/rateio")
+	public ResponseEntity<List<CentroRateioDTO>> findAllRateio() {
+		
+	List<CentroRateio> list = service.findAll();
+	List<CentroRateioDTO> listDTO =list.stream().map(obj -> new CentroRateioDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDTO);
+		
+	}
+	
+	
+	
+	
+/*	@RequestMapping(method=RequestMethod.GET)
+	public ResponseEntity<Page<CentroRateioDTO>> findPage(
 			@RequestParam(value="nome",defaultValue="")String nome,
 			@RequestParam(value="categorias",defaultValue="")String categorias,
 		    @RequestParam(value="page",defaultValue="0")Integer page,
@@ -68,7 +91,7 @@ public class CentroCustoResource {
 	String nomeDecoded = URL.decodeParm(nome);
 	List<Integer> ids = URL.decodeIntList(categorias);	
 	Page<CentroCusto> list = service.search(nomeDecoded,ids,page, linesPerPage, ordeBy, direction);
-	Page<CentroCustoDTO> listDTO =list.map(obj -> new CentroCustoDTO(obj));
+	Page<CentroRateioDTO> listDTO =list.map(obj -> new CentroRateioDTO(obj));
 		return ResponseEntity.ok().body(listDTO);
 	}*/
 

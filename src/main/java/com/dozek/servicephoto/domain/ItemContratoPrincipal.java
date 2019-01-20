@@ -10,23 +10,23 @@ import javax.persistence.Entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class ItemPedido  implements Serializable {
+public class ItemContratoPrincipal  implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@JsonIgnore
 	@EmbeddedId
-	private ItemPedidoPK id = new ItemPedidoPK();
+	private ContratoPrincipalPK id = new ContratoPrincipalPK();
 	
 	private Double desconto;
 	private Integer quantidade;
 	private Double preco;
 
-	public ItemPedido() {
+	public ItemContratoPrincipal() {
 	}
 
-	public ItemPedido(Pedido pedido,Produto produto, Double desconto, Integer quantidade, Double preco) {
+	public ItemContratoPrincipal(ContratoPrincipal contratoPrincipal,Produto produto, Double desconto, Integer quantidade, Double preco) {
 		super();
-		id.setPedido(pedido);
+		id.setContratoPrincipal(contratoPrincipal);
 		id.setProduto(produto);
 		this.desconto = desconto;
 		this.quantidade = quantidade;
@@ -36,12 +36,13 @@ public class ItemPedido  implements Serializable {
 	public double getSubTotal() {
 		return (preco - desconto)*quantidade;
 	}
+	
 	@JsonIgnore
-	public Pedido getPedido() {
-		return id.getPedido();
+	public ContratoPrincipal getContratoPrincipal() {
+		return id.getContratoPrincipal();
 	}
-	public void setPedido(Pedido pedido) {
-		id.setPedido(pedido);
+	public void setPedido(ContratoPrincipal contratoPrincipal) {
+		id.setContratoPrincipal(contratoPrincipal);
 	}
 	
 
@@ -53,11 +54,11 @@ public class ItemPedido  implements Serializable {
 		id.setProduto(produto);
 	}
 
-	public ItemPedidoPK getId() {
+	public ContratoPrincipalPK getId() {
 		return id;
 	}
 
-	public void setId(ItemPedidoPK id) {
+	public void setId(ContratoPrincipalPK id) {
 		this.id = id;
 	}
 
@@ -102,7 +103,7 @@ public class ItemPedido  implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ItemPedido other = (ItemPedido) obj;
+		ItemContratoPrincipal other = (ItemContratoPrincipal) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

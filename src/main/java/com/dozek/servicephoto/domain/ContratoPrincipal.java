@@ -3,7 +3,9 @@ package com.dozek.servicephoto.domain;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -29,6 +31,8 @@ public class ContratoPrincipal implements Serializable{
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="codigo")
 	private Integer id;	
+	private String email;
+	private String Curso;
 	
 	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
 	private Date dtFechamento;	
@@ -41,6 +45,10 @@ public class ContratoPrincipal implements Serializable{
 	@ManyToOne
 	@JoinColumn(name="escola_id")
 	private Escola escola; 
+	
+	@OneToMany(mappedBy="id.contratoPrincipal")
+	private Set<ItemContratoPrincipal> itemContratoPrincipal = new HashSet<>();
+	
 	
 	@Column(name="evento",length = 6)
 	private String  evento;	
@@ -85,6 +93,23 @@ public class ContratoPrincipal implements Serializable{
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getCurso() {
+		return Curso;
+	}
+
+	public void setCurso(String curso) {
+		Curso = curso;
 	}
 
 	public Date getDtFechamento() {
