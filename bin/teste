@@ -1,0 +1,46 @@
+[33m30b1eb1[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m Finaceniro e Centro de Custo
+[33m6da7eeb[m Esqueci a senha
+[33m372069d[m Refresh token
+[33mf63794e[m Restrição de conteúdo: cliente só recupera seus pedidos
+[33m6a8ba7a[m Restricao de conteudo: cliente so recupera ele mesmo
+[33m5321ea0[m Autorizando endpoints para perfis especificos
+[33mae23236[m Implementando autorizacao
+[33m2ee5212[m Implementando autenticação e geração do token JWT
+[33m9646a46[m Salvando perfis de usuário na base de dados
+[33m32fd146[m Adicionando senha a cliente
+[33m4e0f9cd[m Configuracao Inicial do Spring Security
+[33mca939c4[m Email HTML
+[33m1e523ea[m Implementado SmtpEmailService
+[33mc49939b[m MockEmailService com Logger. Padrões Strategy e Template Method
+[33ma5f0f8b[m Implementado toString de Pedido
+[33ma5a54a8[m[33m ([m[1;31mheroku/master[m[33m)[m Configuracao e envio do projeto para producao
+[33mb8720fa[m Criando um profile de desenvolvimento
+[33mc742f6e[m Criando o Profile de teste
+[33md9874c5[m Inserindo Pedido
+[33mb09a1d3[m SubTotal e total do pedido
+[33m830a342[m Busca de prosutos por nome e categorias
+[33mb94c68d[m Validação customixasa: email nãp repetido na atualização de cliente
+[33mfad1f50[m Validação customizada: email não repetido na inserção de cliente
+[33m5bd0b47[m Inserindo novo cliente com POST
+[33m2fcad60[m Correções:ipdate em CategoriaSerivce e consturir de pagamento
+[33ma672b9b[m PUT,DELETE E GET para Cleinte
+[33m67f7a50[m Personalizando o retorno da validação
+[33m198b8a5[m Validacao sintatica com Bean validation
+[33me966783[m Paginação com parametro opcional na requisição
+[33mdbc8890[m Listando todas categoria com DTO
+[33m59dba85[m Deletando um categoria
+[33mc9cebd8[m Atualizando com PUT, outros pequenos ajuste
+[33mcafddfb[m Inserindo uma nova categoria com o Post
+[33m4dacb64[m Atualizacão utilizando somente jsonignore
+[33mab2db92[m Endpoint /pedidos/{id} disponibilizado
+[33mac3b3ae[m Itempedido e ItempedidoPK
+[33m7ad95f1[m Pedido, estado pagamento e pagamento
+[33m34bb055[m Cliente, Tipo Cliente, Telefone e endereços
+[33m0f789de[m Estado e Cidade
+[33m035c209[m Ajuste no endpont /categoria/id
+[33m2658fd7[m Produto Associacao muitos para muitos
+[33mab67c08[m Criado operação de instaciaçcao
+[33m0fa9cb4[m Criado repositorio Categoria
+[33m5dfb130[m Criado categoria banco H2
+[33mc19ae27[m Testando o Rest
+[33m6f1503f[m Projeto Criado2
